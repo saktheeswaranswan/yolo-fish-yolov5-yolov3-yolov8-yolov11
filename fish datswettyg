@@ -1,0 +1,13 @@
+!pip install roboflow
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="dyyGIX1ZxI2ZJEiK5Uce")
+project = rf.workspace("project-8hufk").project("gold_fish_")
+version = project.version(9)
+dataset = version.download("yolov5")
+
+https://universe.roboflow.com/project-8hufk/gold_fish_
+
+
+https://universe.roboflow.com/project-8hufk/gold_fish_
+                

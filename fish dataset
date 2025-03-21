@@ -1,0 +1,11 @@
+https://universe.roboflow.com/1253971414qqcom-gpnwq/new_fish_detect_2
+
+
+!pip install roboflow
+
+from roboflow import Roboflow
+rf = Roboflow(api_key="XQ5cuoLYRoQQRUIOcjR0")
+project = rf.workspace("1253971414qqcom-gpnwq").project("new_fish_detect_2")
+version = project.version(2)
+dataset = version.download("yolov11")
+                

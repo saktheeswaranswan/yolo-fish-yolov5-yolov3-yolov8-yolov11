@@ -1,0 +1,47 @@
+import pathlib
+# Optionally save the original (if needed later)
+temp = pathlib.PosixPath
+# Redirect PosixPath to WindowsPath so that deserialization works on Windows
+pathlib.PosixPath = pathlib.WindowsPath
+
+import torch
+# Now load your model as usual
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='best.pt', force_reload=True)
+
+import pathlib
+# Save the original PosixPath (optional, in case you need it later)
+temp = pathlib.PosixPath
+# Redirect PosixPath to WindowsPath so that torch.load can instantiate paths correctly
+pathlib.PosixPath = pathlib.WindowsPath
+
+# Now you can load your model normally
+import torch
+model = torch.hub.load('ultralytics/yolov5', 'custom', path='ifisher.mp4', device='cpu')
+
+
+(media) C:\Users\k\Documents\yolov5-master>python detect.py --weights best.pt --source ifisher.mp4 --device cpu
+detect: weights=['best.pt'], source=ifisher.mp4, data=data\coco128.yaml, imgsz=[640, 640], conf_thres=0.25, iou_thres=0.45, max_det=1000, device=cpu, view_img=False, save_txt=False, save_format=0, save_csv=False, save_conf=False, save_crop=False, nosave=False, classes=None, agnostic_nms=False, augment=False, visualize=False, update=False, project=runs\detect, name=exp, exist_ok=False, line_thickness=3, hide_labels=False, hide_conf=False, half=False, dnn=False, vid_stride=1
+YOLOv5  2025-3-14 Python-3.9.21 torch-1.8.0+cpu CPU
+
+Traceback (most recent call last):
+  File "C:\Users\k\Documents\yolov5-master\detect.py", line 438, in <module>
+    main(opt)
+  File "C:\Users\k\Documents\yolov5-master\detect.py", line 433, in main
+    run(**vars(opt))
+  File "C:\Users\k\.conda\envs\media\lib\site-packages\torch\autograd\grad_mode.py", line 27, in decorate_context
+    return func(*args, **kwargs)
+  File "C:\Users\k\Documents\yolov5-master\detect.py", line 166, in run
+    model = DetectMultiBackend(weights, device=device, dnn=dnn, data=data, fp16=half)
+  File "C:\Users\k\Documents\yolov5-master\models\common.py", line 489, in __init__
+    model = attempt_load(weights if isinstance(weights, list) else w, device=device, inplace=True, fuse=fuse)
+  File "C:\Users\k\Documents\yolov5-master\models\experimental.py", line 98, in attempt_load
+    ckpt = torch.load(attempt_download(w), map_location="cpu")  # load
+  File "C:\Users\k\.conda\envs\media\lib\site-packages\ultralytics\utils\patches.py", line 86, in torch_load
+    return _torch_load(*args, **kwargs)
+  File "C:\Users\k\.conda\envs\media\lib\site-packages\torch\serialization.py", line 592, in load
+    return _load(opened_zipfile, map_location, pickle_module, **pickle_load_args)
+  File "C:\Users\k\.conda\envs\media\lib\site-packages\torch\serialization.py", line 851, in _load
+    result = unpickler.load()
+  File "C:\Users\k\.conda\envs\media\lib\pathlib.py", line 1084, in __new__
+    raise NotImplementedError("cannot instantiate %r on your system"
+NotImplementedError: cannot instantiate 'PosixPath' on your system
